@@ -2,14 +2,11 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.8.3-master-246ba7b
+ * v0.9.0-rc2-master-4a648d5
  */
 goog.provide('ng.material.components.switch');
 goog.require('ng.material.components.checkbox');
 goog.require('ng.material.core');
-(function() {
-'use strict';
-
 /**
  * @private
  * @ngdoc module
@@ -168,4 +165,4 @@ function MdSwitch(mdCheckboxDirective, $mdTheming, $mdUtil, $document, $mdConsta
 }
 MdSwitch.$inject = ["mdCheckboxDirective", "$mdTheming", "$mdUtil", "$document", "$mdConstant", "$parse", "$$rAF", "$mdGesture"];
 
-})();
+ng.material.components.switch = angular.module("material.components.switch");

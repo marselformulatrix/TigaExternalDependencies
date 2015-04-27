@@ -2,14 +2,11 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.8.3-master-246ba7b
+ * v0.9.0-rc2-master-4a648d5
  */
 goog.provide('ng.material.components.sidenav');
 goog.require('ng.material.components.backdrop');
 goog.require('ng.material.core');
-(function() {
-'use strict';
-
 /**
  * @ngdoc module
  * @name material.components.sidenav
@@ -52,13 +49,13 @@ angular.module('material.components.sidenav', [
  *    });
  * // Async open the given sidenav
  * $mdSidenav(componentId)
- *    .open();
+ *    .open()
  *    .then(function(){
  *      $log.debug('opened');
  *    });
  * // Async close the given sidenav
  * $mdSidenav(componentId)
- *    .close();
+ *    .close()
  *    .then(function(){
  *      $log.debug('closed');
  *    });
@@ -124,8 +121,10 @@ function SidenavService($mdComponentRegistry, $q) {
 }
 SidenavService.$inject = ["$mdComponentRegistry", "$q"];
 /**
- * @private
+ * @ngdoc directive
  * @name mdSidenavFocus
+ * @module material.components.sidenav
+ *
  * @restrict A
  *
  * @description
@@ -299,13 +298,15 @@ function SidenavDirective($timeout, $animate, $parse, $log, $mdMedia, $mdConstan
       disableParentScroll(isOpen);
 
       return promise = $q.all([
-        $animate[isOpen ? 'enter' : 'leave'](backdrop, parent),
-        $animate[isOpen ? 'removeClass' : 'addClass'](element, 'md-closed').then(function() {
-          if (scope.isOpen) {
-            focusEl && focusEl.focus();
-          }
-        })
-      ]);
+                isOpen ? $animate.enter(backdrop, parent) : $animate.leave(backdrop),
+                $animate[isOpen ? 'removeClass' : 'addClass'](element, 'md-closed')
+              ])
+              .then(function() {
+                // Perform focus when animations are ALL done...
+                if (scope.isOpen) {
+                  focusEl && focusEl.focus();
+                }
+              });
     }
 
     /**
@@ -420,6 +421,4 @@ function SidenavController($scope, $element, $attrs, $mdComponentRegistry, $q) {
 }
 SidenavController.$inject = ["$scope", "$element", "$attrs", "$mdComponentRegistry", "$q"];
 
-
-
-})();
+ng.material.components.sidenav = angular.module("material.components.sidenav");

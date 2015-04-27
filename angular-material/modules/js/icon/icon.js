@@ -2,11 +2,10 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.8.3-master-246ba7b
+ * v0.9.0-rc2-master-4a648d5
  */
-(function() {
-'use strict';
-
+(function () {
+"use strict";
 /**
  * @ngdoc module
  * @name material.components.icon
@@ -108,11 +107,6 @@ function mdIconDirective($mdIcon, $mdTheming, $mdAria ) {
   }
 }
 mdIconDirective.$inject = ["$mdIcon", "$mdTheming", "$mdAria"];
-
-})();
-
-(function() {
-  'use strict';
 
   angular
     .module('material.components.icon' )

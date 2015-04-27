@@ -2,11 +2,10 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.8.3-master-246ba7b
+ * v0.9.0-rc2-master-4a648d5
  */
-(function() {
-'use strict';
-
+(function () {
+"use strict";
 /**
  * @ngdoc module
  * @name material.components.gridList
@@ -163,8 +162,12 @@ function GridListDirective($interpolate, $mdConstant, $mdGridLayout, $mdMedia) {
     /**
      * Invokes the layout engine, and uses its results to lay out our
      * tile elements.
+     *
+     * @param {boolean} tilesAdded Whether tiles have been added since the last
+     *    layout. This is to avoid situations where tiles are replaced with
+     *    properties identical to their removed counterparts.
      */
-    function layoutDelegate() {
+    function layoutDelegate(tilesAdded) {
       var props = {
         tileSpans: getTileSpans(),
         colCount: getColumnCount(),
@@ -173,7 +176,7 @@ function GridListDirective($interpolate, $mdConstant, $mdGridLayout, $mdMedia) {
         gutter: getGutter()
       };
 
-      if (angular.equals(props, lastLayoutProps)) {
+      if (!tilesAdded && angular.equals(props, lastLayoutProps)) {
         return;
       }
 
@@ -414,6 +417,7 @@ GridListDirective.$inject = ["$interpolate", "$mdConstant", "$mdGridLayout", "$m
 /* @ngInject */
 function GridListController($timeout) {
   this.invalidated = false;
+  this.tilesAdded = false;
   this.$timeout_ = $timeout;
   this.tiles = [];
   this.layoutDelegate = angular.noop;
@@ -428,6 +432,7 @@ GridListController.prototype = {
     } else {
       this.tiles.splice(idx, 0, tile);
     }
+    this.tilesAdded = true;
     this.invalidateLayout();
   },
 
@@ -450,9 +455,10 @@ GridListController.prototype = {
 
   layout: function() {
     try {
-      this.layoutDelegate();
+      this.layoutDelegate(this.tilesAdded);
     } finally {
       this.invalidated = false;
+      this.tilesAdded = false;
     }
   },
 

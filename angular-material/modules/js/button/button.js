@@ -2,11 +2,10 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.8.3-master-246ba7b
+ * v0.9.0-rc2-master-4a648d5
  */
-(function() {
-'use strict';
-
+(function () {
+"use strict";
 /**
  * @ngdoc module
  * @name material.components.button
@@ -14,10 +13,9 @@
  *
  * Button
  */
-angular.module('material.components.button', [
-  'material.core'
-])
-  .directive('mdButton', MdButtonDirective);
+angular
+    .module('material.components.button', [ 'material.core' ])
+    .directive('mdButton', MdButtonDirective);
 
 /**
  * @ngdoc directive
@@ -62,9 +60,12 @@ angular.module('material.components.button', [
  *  <md-button class="md-fab md-mini" aria-label="Mini FAB">
  *    <md-icon md-svg-src="your/icon.svg"></md-icon>
  *  </md-button>
+ *  <md-button class="md-icon-button" aria-label="Custom Icon Button">
+ *    <md-icon md-svg-icon="path/to/your.svg"></md-icon>
+ *  </md-button>
  * </hljs>
  */
-function MdButtonDirective($mdInkRipple, $mdTheming, $mdAria) {
+function MdButtonDirective($mdInkRipple, $mdTheming, $mdAria, $timeout) {
 
   return {
     restrict: 'EA',
@@ -75,7 +76,7 @@ function MdButtonDirective($mdInkRipple, $mdTheming, $mdAria) {
   };
 
   function isAnchor(attr) {
-    return angular.isDefined(attr.href) || angular.isDefined(attr.ngHref) || angular.isDefined(attr.uiSref);
+    return angular.isDefined(attr.href) || angular.isDefined(attr.ngHref) || angular.isDefined(attr.ngLink) || angular.isDefined(attr.uiSref);
   }
   
   function getTemplate(element, attr) {
@@ -101,8 +102,30 @@ function MdButtonDirective($mdInkRipple, $mdTheming, $mdAria) {
         element.attr('tabindex', isDisabled ? -1 : 0);
       });
     }
+
+    // disabling click event when disabled is true
+    element.on('click', function(e){
+      if (attr.disabled === true) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    });
+
+    // restrict focus styles to the keyboard
+    scope.mouseActive = false;
+    element.on('mousedown', function() {
+        scope.mouseActive = true;
+        $timeout(function(){
+          scope.mouseActive = false;
+        }, 100);
+      })
+      .on('focus', function() {
+        if(scope.mouseActive === false) { element.addClass('md-focused'); }
+      })
+      .on('blur', function() { element.removeClass('md-focused'); });
   }
 
 }
-MdButtonDirective.$inject = ["$mdInkRipple", "$mdTheming", "$mdAria"];
+MdButtonDirective.$inject = ["$mdInkRipple", "$mdTheming", "$mdAria", "$timeout"];
+
 })();
