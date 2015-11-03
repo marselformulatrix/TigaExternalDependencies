@@ -3,7 +3,7 @@
   "name": "html2canvas",
   "description": "Screenshots with JavaScript",
   "main": "dist/html2canvas.js",
-  "version": "0.5.0-beta2",
+  "version": "0.5.0-beta1",
   "author": {
     "name": "Niklas von Hertzen",
     "email": "niklasvh@gmail.com",
@@ -11,6 +11,9 @@
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "es6-promise": "^2.0.1"
   },
   "repository": {
     "type": "git",
@@ -20,8 +23,9 @@
     "url": "https://github.com/niklasvh/html2canvas/issues"
   },
   "devDependencies": {
-    "base64-arraybuffer": ">= 0.1.4",
-    "bluebird": "2.7.1",
+    "base64-arraybuffer": ">= 0.1.0",
+    "bluebird": "^2.7.1",
+    "bower": "^1.3.12",
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.3.0",
     "grunt-contrib-connect": "^0.8.0",
@@ -39,7 +43,8 @@
     "wd": "^0.2.21"
   },
   "scripts": {
-    "test": "grunt travis --verbose"
+    "test": "grunt travis --verbose",
+    "postpublish": "bower register html2canvas git://github.com/niklasvh/html2canvas.git"
   },
   "homepage": "http://html2canvas.hertzen.com",
   "licenses": [

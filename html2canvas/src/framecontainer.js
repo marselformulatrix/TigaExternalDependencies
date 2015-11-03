@@ -1,4 +1,5 @@
 var utils = require('./utils');
+var Promise = require('./promise');
 var getBounds = utils.getBounds;
 var loadUrlDocument = require('./proxy').loadUrlDocument;
 

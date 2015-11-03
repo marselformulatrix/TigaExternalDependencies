@@ -9,5 +9,6 @@
   },
   "_source": "git://github.com/eligrey/Blob.js.git",
   "_target": "*",
-  "_originalSource": "Blob"
+  "_originalSource": "Blob",
+  "_direct": true
 }

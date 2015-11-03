@@ -1,3 +1,5 @@
+var Promise = require('./promise');
+
 function GradientContainer(imageData) {
     this.src = imageData.value;
     this.colorStops = [];

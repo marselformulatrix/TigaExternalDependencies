@@ -1,4 +1,5 @@
 var log = require('./log');
+var Promise = require('./promise');
 
 function restoreOwnerScroll(ownerDocument, x, y) {
     if (ownerDocument.defaultView && (x !== ownerDocument.defaultView.pageXOffset || y !== ownerDocument.defaultView.pageYOffset)) {

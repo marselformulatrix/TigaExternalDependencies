@@ -5,6 +5,7 @@ var TextContainer = require('./textcontainer');
 var PseudoElementContainer = require('./pseudoelementcontainer');
 var FontMetrics = require('./fontmetrics');
 var Color = require('./color');
+var Promise = require('./promise');
 var StackingContext = require('./stackingcontext');
 var utils = require('./utils');
 var bind = utils.bind;

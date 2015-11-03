@@ -1,3 +1,4 @@
+var Promise = require('./promise');
 var log = require('./log');
 var ImageContainer = require('./imagecontainer');
 var DummyImageContainer = require('./dummyimagecontainer');

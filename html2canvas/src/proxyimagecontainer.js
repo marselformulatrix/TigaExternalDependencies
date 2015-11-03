@@ -1,4 +1,5 @@
 var ProxyURL = require('./proxy').ProxyURL;
+var Promise = require('./promise');
 
 function ProxyImageContainer(src, proxy) {
     var link = document.createElement("a");

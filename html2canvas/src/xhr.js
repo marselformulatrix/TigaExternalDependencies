@@ -1,3 +1,5 @@
+var Promise = require('./promise');
+
 function XHR(url) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();

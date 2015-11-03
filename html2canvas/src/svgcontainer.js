@@ -1,3 +1,4 @@
+var Promise = require('./promise');
 var XHR = require('./xhr');
 var decode64 = require('./utils').decode64;
 
