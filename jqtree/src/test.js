@@ -1,6 +1,6 @@
 var Node, Position, util, _indexOf, indexOf;
 
-require('jquery-mockjax');
+var mockjax = require('jquery-mockjax')(jQuery, window);
 
 
 QUnit.begin(function() {
@@ -1028,7 +1028,7 @@ test('load on demand', function() {
         dataUrl: '/tree/'
     });
 
-    $.mockjax({
+    mockjax({
         url: '*',
         response: function(options) {
             equal(options.url, '/tree/', '2');
@@ -1657,6 +1657,21 @@ test('getData', function() {
                     {
                         name: 'c1'
                     }
+                ]
+            }
+        ]
+    );
+
+    // 3. get data including parent
+    var n1 = node.getNodeByName('n1');
+
+    deepEqual(
+        n1.getData(true),
+        [
+            {
+                name: 'n1',
+                children: [
+                    { name: 'c1'}
                 ]
             }
         ]
