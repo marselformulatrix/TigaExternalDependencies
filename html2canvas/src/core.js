@@ -1,4 +1,3 @@
-var Promise = require('./promise');
 var Support = require('./support');
 var CanvasRenderer = require('./renderers/canvas');
 var ImageLoader = require('./imageloader');
@@ -51,15 +50,22 @@ function html2canvas(nodeList, options) {
     });
 }
 
-html2canvas.Promise = Promise;
 html2canvas.CanvasRenderer = CanvasRenderer;
 html2canvas.NodeContainer = NodeContainer;
 html2canvas.log = log;
 html2canvas.utils = utils;
 
-module.exports = (typeof(document) === "undefined" || typeof(Object.create) !== "function" || typeof(document.createElement("canvas").getContext) !== "function") ? function() {
+var html2canvasExport = (typeof(document) === "undefined" || typeof(Object.create) !== "function" || typeof(document.createElement("canvas").getContext) !== "function") ? function() {
     return Promise.reject("No canvas support");
 } : html2canvas;
+
+module.exports = html2canvasExport;
+
+if (typeof(define) === 'function' && define.amd) {
+    define('html2canvas', [], function() {
+        return html2canvasExport;
+    });
+}
 
 function renderDocument(document, options, windowWidth, windowHeight, html2canvasIndex) {
     return createWindowClone(document, document, windowWidth, windowHeight, options, document.defaultView.pageXOffset, document.defaultView.pageYOffset).then(function(container) {
